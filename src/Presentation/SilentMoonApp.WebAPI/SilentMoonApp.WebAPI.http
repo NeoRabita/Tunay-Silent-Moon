@@ -1,0 +1,6 @@
+@SilentMoonApp.WebAPI_HostAddress = http://localhost:5004
+
+GET {{SilentMoonApp.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
