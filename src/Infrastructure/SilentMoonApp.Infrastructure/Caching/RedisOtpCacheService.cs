@@ -1,13 +1,14 @@
+﻿using StackExchange.Redis;
+using SilentMoonApp.Domain.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SilentMoonApp.Application.Abstractions.Caching;
-using SilentMoonApp.Application.Abstractions.Hashing;
-using SilentMoonApp.Application.DTOs.Auth;
-using SilentMoonApp.Application.Extensions;
 using SilentMoonApp.Application.Helpers;
 using SilentMoonApp.Application.Settings;
-using SilentMoonApp.Domain.Enums;
-using StackExchange.Redis;
+using SilentMoonApp.Application.DTOs.Auth;
+using SilentMoonApp.Application.Extensions;
+using SilentMoonApp.Application.Abstractions.Caching;
+using SilentMoonApp.Application.Abstractions.Hashing;
+
 
 namespace SilentMoonApp.Infrastructure.Caching;
 
@@ -15,7 +16,7 @@ public class RedisOtpCacheService : IOtpCacheService
 {
 	private const string VerifyScript =
 			"""
-		-- OTP Redis-d? yoxdursa istifad? edil? bilm?z.
+		-- OTP Redis-də yoxdursa istifadə edilə bilməz.
 		if redis.call('EXISTS', KEYS[1]) == 0 then
 			return { -1, 0 }
 		end
@@ -47,7 +48,7 @@ public class RedisOtpCacheService : IOtpCacheService
 		end
 
 
-		-- OTP dogrudursa h?min anda silinir.
+		-- OTP dogrudursa həmin anda silinir.
 		if storedHash == ARGV[1] then
 			redis.call('DEL', KEYS[1])
 
@@ -55,7 +56,7 @@ public class RedisOtpCacheService : IOtpCacheService
 		end
 
 
-		-- Yanlis c?hd atomik s?kild? artirilir.
+		-- Yanlis cəhd atomik şəkildə artırılır.
 		failedAttempts =
 			redis.call(
 				'HINCRBY',
@@ -65,7 +66,7 @@ public class RedisOtpCacheService : IOtpCacheService
 			)
 
 
-		-- 5-ci yanlis c?hdd? OTP silinir.
+		-- 5-ci yanlis cəhddə OTP silinir.
 		if failedAttempts >= maxAttempts then
 			redis.call('DEL', KEYS[1])
 
