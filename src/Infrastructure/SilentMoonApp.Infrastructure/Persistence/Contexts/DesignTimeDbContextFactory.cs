@@ -12,26 +12,23 @@ public sealed class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<App
 
 		IConfiguration configuration = new ConfigurationBuilder()
 			.SetBasePath(basePath)
-			.AddJsonFile(
-				path: "appsettings.json",
-				optional: false,
-				reloadOnChange: false)
-			.AddJsonFile(
-				path: "appsettings.Development.json",
-				optional: true,
-				reloadOnChange: false)
+			.AddJsonFile(path: "appsettings.json",
+						 optional: false,
+						 reloadOnChange: false)
+			.AddJsonFile(path: "appsettings.Development.json",
+						 optional: true,
+						 reloadOnChange: false)
 			.AddEnvironmentVariables()
 			.Build();
 
-		var connectionString =
-			configuration.GetConnectionString("DefaultConnection")
-			?? throw new InvalidOperationException(
-				"Connection String 'DefaultConnection' was not Found.");
+		string connectionString = configuration.GetConnectionString("OracleConnection")
+							   //?? configuration.GetConnectionString("DefaultConnection")
+							   ?? throw new InvalidOperationException("ConnectionStrings were not found.");
 
-		var optionsBuilder =
-			new DbContextOptionsBuilder<AppDbContext>();
+		var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-		optionsBuilder.UseSqlServer(connectionString);
+		//optionsBuilder.UseSqlServer(connectionString);
+		optionsBuilder.UseOracle(connectionString);
 
 		return new AppDbContext(optionsBuilder.Options);
 	}

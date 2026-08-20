@@ -5,11 +5,11 @@ using StackExchange.Redis;
 using SilentMoonApp.Domain.Enums;
 using SilentMoonApp.Application.Settings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SilentMoonApp.Infrastructure.Hashing;
 using SilentMoonApp.Infrastructure.Caching;
 using SilentMoonApp.Infrastructure.Logging;
 using SilentMoonApp.Infrastructure.Settings;
-using Microsoft.Extensions.Configuration;
 using SilentMoonApp.Application.Abstractions.Logging;
 using SilentMoonApp.Infrastructure.Storage.Providers;
 using SilentMoonApp.Application.Abstractions.Caching;
@@ -48,12 +48,14 @@ public static class DependencyInjection
 	private static void AddDatabase(IServiceCollection services,
 									IConfiguration configuration)
 	{
-		string connectionString = configuration.GetConnectionString("DefaultConnection")
-							   ?? throw new InvalidOperationException("ConnectionStrings:DefaultConnection was not found.");
+		string connectionString = configuration.GetConnectionString("OracleConnection")
+							   //?? configuration.GetConnectionString("DefaultConnection")
+							   ?? throw new InvalidOperationException("ConnectionStrings were not found.");
 
-		services.AddDbContext<AppDbContext>(opt =>
+		services.AddDbContext<AppDbContext>(options =>
 		{
-			opt.UseSqlServer(connectionString);
+			//options.UseSqlServer(connectionString);
+			options.UseOracle(connectionString: connectionString);
 		});
 	}
 
@@ -249,7 +251,7 @@ public static class DependencyInjection
 	private static void AddRedisSettings(IServiceCollection services,
 										 IConfiguration configuration)
 	{
-		string redisConnectionString = configuration.GetConnectionString("Redis")
+		string redisConnectionString = configuration.GetConnectionString("RedisConnection")
 
 									?? throw new InvalidOperationException("ConnectionStrings:Redis not found.");
 

@@ -1,11 +1,8 @@
 using SilentMoonApp.Application.Errors;
-using SilentMoonApp.SharedKernel.Primitives;
-using SilentMoonApp.Domain.Entities.Identity;
-using SilentMoonApp.Application.Abstractions.Messaging;
-using SilentMoonApp.Application.Abstractions.Authentication;
-using SilentMoonApp.Application.Abstractions.Repositories.Read;
-using SilentMoonApp.Application.Abstractions.Repositories;
 using SilentMoonApp.Application.Abstractions.Storage;
+using SilentMoonApp.Application.Abstractions.Messaging;
+using SilentMoonApp.Application.Abstractions.Repositories;
+using SilentMoonApp.Application.Abstractions.Authentication;
 
 
 namespace SilentMoonApp.Application.Features.Profile.Commands.UpdateMyProfile;
@@ -47,6 +44,8 @@ public class UpdateMyProfileCommandHandler : ICommandHandler<UpdateMyProfileComm
 		if (user is null || user.IsDeleted)
 			return Result<UpdateMyProfileResult>.Failure(
 				AuthErrors.UnAuthorized());
+
+		user.FirstName = command.Name;
 
 
 		DateTimeOffset nowUtc = _timeProvider.GetUtcNow();
