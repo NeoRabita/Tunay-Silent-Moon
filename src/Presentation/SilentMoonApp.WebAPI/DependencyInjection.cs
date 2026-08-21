@@ -21,6 +21,7 @@ public static class DependencyInjection
 	{
 		services.AddControllers();
 		services.AddEndpointsApiExplorer();
+		services.AddHealthChecks();
 		services.AddHttpContextAccessor();
 		services.AddLocalization();
 
