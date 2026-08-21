@@ -31,12 +31,7 @@ app.UseExceptionHandler();
 
 //}
 
-app.UseSwagger();
-
-app.UseSwaggerUI(options =>
-{
-	options.DisplayRequestDuration();
-});
+app.UseProtectedSwagger();
 
 
 app.UseHttpsRedirection();

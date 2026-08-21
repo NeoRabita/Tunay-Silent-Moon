@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SilentMoonApp.Domain;
 using SilentMoonApp.Domain.Entities;
 using SilentMoonApp.Domain.Entities.Files;
 using SilentMoonApp.Domain.Entities.Identity;
@@ -43,6 +44,11 @@ public static class GeneralConfiguration
 			   .HasForeignKey(userTopic => userTopic.UserId)
 			   .OnDelete(DeleteBehavior.Cascade);
 
+		builder.Entity<User>()
+			   .HasMany(user => user.Reminders)
+			   .WithOne(reminder => reminder.User)
+			   .HasForeignKey(reminder => reminder.UserId)
+			   .OnDelete(DeleteBehavior.Cascade);
 
 
 		// Role Relations
@@ -130,11 +136,13 @@ public static class GeneralConfiguration
 			   .IsUnique();
 
 
+
 		// RefreshToken Indexes
 
 		builder.Entity<RefreshToken>()
 			   .HasIndex(refreshToken => refreshToken.TokenHash)
 			   .IsUnique();
+
 
 
 		// ImageFile Indexes
@@ -146,11 +154,14 @@ public static class GeneralConfiguration
 			   })
 			   .IsUnique();
 
+
+
 		// Topic Indexes
 
 		builder.Entity<Topic>()
 			   .HasIndex(topic => topic.Slug)
 			   .IsUnique();
+
 
 
 		// UserTopic Indexes
@@ -162,6 +173,14 @@ public static class GeneralConfiguration
 			  	   userTopic.TopicId
 			   })
 			   .IsUnique();
+
+
+
+		// Reminder Indexes
+
+		builder.Entity<Reminder>()
+	   .Property(reminder => reminder.Label)
+	   .HasMaxLength(100);
 	}
 
 

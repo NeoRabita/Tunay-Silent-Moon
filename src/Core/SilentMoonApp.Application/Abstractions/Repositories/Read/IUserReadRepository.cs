@@ -9,6 +9,10 @@ public interface IUserReadRepository : IReadRepository<User>
 							    CancellationToken cancellationToken = default);
 
 	Task<User?> GetByIdWithTopicsAsync(Guid userId,
-								  bool tracking = false,
-								  CancellationToken cancellationToken = default);
+									   bool tracking = false,
+									   CancellationToken cancellationToken = default);
+
+	Task<User?> GetByIdWithRemindersAsync(Guid userId,
+										  bool tracking = false,
+										  CancellationToken cancellationToken = default);
 }

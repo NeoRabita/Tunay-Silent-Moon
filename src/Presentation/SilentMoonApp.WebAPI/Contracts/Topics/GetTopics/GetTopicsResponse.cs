@@ -1,7 +1,7 @@
 ﻿namespace SilentMoonApp.WebAPI.Contracts.Topics.GetTopics;
 
 
-public  class GetTopicsResponse
+public class GetTopicsResponse
 {
 	public required IReadOnlyList<GetTopicResponse> Topics { get; init; }
 }

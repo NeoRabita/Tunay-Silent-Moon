@@ -1,10 +1,11 @@
-using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 
 namespace SilentMoonApp.Application.Helpers;
 
-public class TimedOperation:IDisposable
+public class TimedOperation : IDisposable
 {
 	private readonly ILogger _logger;
 	private readonly string _component;
@@ -35,6 +36,24 @@ public class TimedOperation:IDisposable
 	public double ElapsedMilliseconds => Stopwatch.GetElapsedTime(_startedAt)
 												  .TotalMilliseconds;
 
+	public static int GenerateDaysMask(IEnumerable<EWeekDay> weekDays)
+	{
+		int mask = 0;
+
+		foreach (var day in weekDays)
+			mask |= 1 << ((int)day - 1);
+
+		return mask;
+	}
+
+
+	public static IReadOnlyList<EWeekDay> DecodeDaysMask(int mask)
+
+		=> Enum.GetValues<EWeekDay>()
+				.Where(day => (mask & (1 << ((int)day - 1))) != 0)
+				.ToArray();
+
+
 	public void Dispose()
 	{
 		if (_disposed)
@@ -43,13 +62,13 @@ public class TimedOperation:IDisposable
 		double durationMs = ElapsedMilliseconds;
 
 		_logger.Log(logLevel: _logLevel,
-					
+
 					message: "Operation timing recorded. " +
 							 "Component: {Component}, " +
 							 "Method: {Method}, " +
 							 "Operation: {Operation}, " +
 							 "DurationMs: {DurationMs:F2}",
-					
+
 					args: [_component, _method, _operation, durationMs]);
 
 
