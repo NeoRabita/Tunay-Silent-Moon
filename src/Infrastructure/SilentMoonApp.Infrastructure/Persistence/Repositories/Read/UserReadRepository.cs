@@ -13,9 +13,20 @@ public class UserReadRepository : ReadRepository<User>, IUserReadRepository
 											 bool tracking = false,
 											 CancellationToken ct = default)
 
-		=> await GetAsync(filter: user => user.Email== email,
+		=> await GetAsync(filter: user => user.Email == email,
 						  includes: users => users.Include(user => user.UserRoles)
-						  						  .ThenInclude(userRole => userRole.Role),
+													.ThenInclude(userRole => userRole.Role),
 						  tracking: tracking,
 						  ct: ct);
+
+
+	public async Task<User?> GetByIdWithTopicsAsync(Guid userId,
+											  bool tracking = false,
+											  CancellationToken cancellationToken = default)
+
+		=> await GetAsync(filter: user => user.Id == userId,
+						  includes: users => users.Include(user => user.UserTopics)
+						  						  .ThenInclude(userTopic => userTopic.Topic),
+						  tracking: tracking,
+						  ct: cancellationToken);
 }

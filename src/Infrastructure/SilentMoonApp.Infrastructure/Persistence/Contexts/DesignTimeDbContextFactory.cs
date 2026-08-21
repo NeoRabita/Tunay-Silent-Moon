@@ -10,12 +10,16 @@ public sealed class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<App
 	{
 		var basePath = Directory.GetCurrentDirectory();
 
+		string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+							  ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT")
+							  ?? "Development";
+
 		IConfiguration configuration = new ConfigurationBuilder()
 			.SetBasePath(basePath)
 			.AddJsonFile(path: "appsettings.json",
 						 optional: false,
 						 reloadOnChange: false)
-			.AddJsonFile(path: "appsettings.Development.json",
+			.AddJsonFile(path: $"appsettings.{environmentName}.json",
 						 optional: true,
 						 reloadOnChange: false)
 			.AddEnvironmentVariables()
