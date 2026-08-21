@@ -43,7 +43,7 @@ public class RegisterCommandHandler : ICommandHandler<RegisterCommand, RegisterR
 
 		if (isEmailAlreadyExists)
 			return Result<RegisterResult>.Failure(
-				UserErrors.EmailAlreadyExsists());
+				UserErrors.EmailAlreadyExists());
 
 
 		if (userName is not null)

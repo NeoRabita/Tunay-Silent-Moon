@@ -207,4 +207,10 @@
   <data name="StorageInvalidFileName" xml:space="preserve">
     <value>Fayl adı etibarsızdır və ya icazə verilən maksimum simvol həddini keçir.</value>
   </data>
+  <data name="ReminderNotFound" xml:space="preserve">
+    <value>Xatırlatma tapılmadı.</value>
+  </data>
+  <data name="UserForbidden" xml:space="preserve">
+    <value>Bu xatırlatma üzərində əməliyyat aparmaq icazəniz yoxdur.</value>
+  </data>
 </root>

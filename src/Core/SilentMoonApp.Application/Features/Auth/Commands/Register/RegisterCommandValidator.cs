@@ -9,30 +9,30 @@ public sealed class RegisterCommandValidator : AbstractValidator<RegisterCommand
 	public RegisterCommandValidator()
 	{
 		RuleFor(command => command.FirstName)
-			
+
 			.NotEmpty()
-			.WithMessage("Ad bos ola bilm?z.")
-			
+			.WithMessage("The Name field is required.")
+
 			.MaximumLength(50)
-			.WithMessage("Ad maksimum 50 simvol ola bil?r.");
+			.WithMessage("The Name field can be at most 50 characters long.");
 
 
 		RuleFor(command => command.LastName)
-			
+
 			.MaximumLength(50)
-			.WithMessage("Soyad maksimum 50 simvol ola bil?r.");
+			.WithMessage("The Last Name field can be at most 50 characters long.");
 
 
 		RuleFor(command => command.UserName)
 
 			.MinimumLength(3)
-			.WithMessage("Istifad?çi adi minimum 3 simvol olmalidir.")
+			.WithMessage("The UserName field must be at least 3 characters long.")
 
 			.MaximumLength(30)
-			.WithMessage("Istifad?çi adi maksimum 30 simvol ola bil?r.")
+			.WithMessage("The UserName field can be at most 30 characters long.")
 
 			.Matches("^[a-zA-Z0-9._]+$")
-			.WithMessage("Istifad?çi adinda yalniz h?rf, r?q?m, nöqt? v? alt x?tt istifad? edil? bil?r.");
+			.WithMessage("The UserName field can only contain letters, numbers, dots, and underscores.");
 
 
 		RuleFor(command => command.Email)
@@ -44,10 +44,10 @@ public sealed class RegisterCommandValidator : AbstractValidator<RegisterCommand
 			.WithMessage(ErrorMessages.ValidationEmailInvalid)
 
 			.MinimumLength(12)
-			.WithMessage("E-poçt ünvani minimum 12 simvol olmalidir.")
+			.WithMessage("E-mail Address must be at least 3 characters long.")
 
 			.MaximumLength(254)
-			.WithMessage("E-poçt ünvani maksimum 254 simvol ola bil?r.");
+			.WithMessage("E-mail Address field can be at most 50 characters long.");
 
 
 		RuleFor(command => command.Password)
@@ -56,18 +56,19 @@ public sealed class RegisterCommandValidator : AbstractValidator<RegisterCommand
 			.WithMessage(ErrorMessages.ValidationPasswordRequired)
 
 			.MinimumLength(8)
-			.WithMessage("Parol minimum 8 simvol olmalidir.")
+			.WithMessage("The Password  must be at least 3 characters long.")
 
 			.MaximumLength(100)
-			.WithMessage("Parol maksimum 100 simvol ola bil?r.")
+			.WithMessage("Parol can be at most 50 characters long.")
 
 			.Matches("[A-Z]")
-			.WithMessage("Parolda ?n azi bir böyük h?rf olmalidir.")
+			.WithMessage("The Password must contain at least one uppercase letter.")
 
 			.Matches("[a-z]")
-			.WithMessage("Parolda ?n azi bir kiçik h?rf olmalidir.")
+			.WithMessage("The Password must contain at least one lowercase letter.")
 
 			.Matches("[0-9]")
-			.WithMessage("Parolda ?n azi bir r?q?m olmalidir.");
+			.WithMessage("The Password must contain at least one digit.");
 	}
+
 }

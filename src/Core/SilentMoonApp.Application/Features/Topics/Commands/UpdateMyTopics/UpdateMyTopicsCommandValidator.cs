@@ -2,7 +2,7 @@
 
 namespace SilentMoonApp.Application.Features.Topics.Commands.UpdateMyTopics;
 
-public sealed class UpdateMyTopicsCommandValidator:AbstractValidator<UpdateMyTopicsCommand>
+public sealed class UpdateMyTopicsCommandValidator : AbstractValidator<UpdateMyTopicsCommand>
 {
 	public UpdateMyTopicsCommandValidator()
 	{

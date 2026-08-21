@@ -19,6 +19,7 @@ public class UpdateMyTopicsCommandHandler : ICommandHandler<UpdateMyTopicsComman
 		_currentUser = currentUser;
 	}
 
+
 	public async Task<Result<IReadOnlyList<UpdateMyTopicsResult>>> Handle(UpdateMyTopicsCommand command,
 																	CancellationToken ct = default)
 	{
@@ -33,22 +34,22 @@ public class UpdateMyTopicsCommandHandler : ICommandHandler<UpdateMyTopicsComman
 															  tracking: true,
 															  cancellationToken: ct);
 
-		if(user is null || user.IsDeleted)
+		if (user is null || user.IsDeleted)
 			return Result<IReadOnlyList<UpdateMyTopicsResult>>.Failure(
 				AuthErrors.UnAuthorized());
 
-		IReadOnlyList<Topic> avalaibleTopics = await _unitOfWork.Repository<ITopicReadRepository>()
-															    .GetAllAsync(tracking: false,
+		IReadOnlyList<Topic> availableTopics = await _unitOfWork.Repository<ITopicReadRepository>()
+																.GetAllAsync(tracking: false,
 																			 cancellationToken: ct);
 
 		HashSet<Guid> requestedTopicIds = command.TopicIds.ToHashSet();
 
-		
-		List<Topic> selectedTopics = avalaibleTopics.Where(t => requestedTopicIds.Contains(t.Id))
+
+		List<Topic> selectedTopics = availableTopics.Where(t => requestedTopicIds.Contains(t.Id))
 													.ToList();
 
-		if(selectedTopics.Count != requestedTopicIds.Count)
-			
+		if (selectedTopics.Count != requestedTopicIds.Count)
+
 			return Result<IReadOnlyList<UpdateMyTopicsResult>>.Failure(
 				new ValidationError(
 					new Dictionary<string, string[]>
@@ -64,17 +65,17 @@ public class UpdateMyTopicsCommandHandler : ICommandHandler<UpdateMyTopicsComman
 													   .ToHashSet();
 
 
-		List<UserTopic> topicsToRemove =user.UserTopics.Where(ut => !requestedTopicIds.Contains(ut.TopicId))
+		List<UserTopic> topicsToRemove = user.UserTopics.Where(ut => !requestedTopicIds.Contains(ut.TopicId))
 													   .ToList();
 
-		foreach(UserTopic userTopic in topicsToRemove)
+		foreach (UserTopic userTopic in topicsToRemove)
 		{
 			user.UserTopics.Remove(userTopic);
 		}
 
 		IEnumerable<Guid> topicsToAdd = requestedTopicIds.Except(currentTopicIds);
 
-		foreach(Guid topicId in topicsToAdd)
+		foreach (Guid topicId in topicsToAdd)
 			user.UserTopics.Add(new UserTopic
 			{
 				UserId = userId,
@@ -83,8 +84,8 @@ public class UpdateMyTopicsCommandHandler : ICommandHandler<UpdateMyTopicsComman
 
 
 		return Result<IReadOnlyList<UpdateMyTopicsResult>>.Success(
-			selectedTopics.Where(topic => requestedTopicIds.Contains(topic.Id))
-						  .Select(topic => 
+			selectedTopics.Where(topic => requestedTopicIds.Contains(topic.Id) && !topic.IsDeleted)
+						  .Select(topic =>
 							   new UpdateMyTopicsResult(Id: topic.Id,
 							  							Slug: topic.Slug,
 							  							Title: topic.Title,

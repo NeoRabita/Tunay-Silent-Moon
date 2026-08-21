@@ -178,6 +178,15 @@ namespace SilentMoonApp.SharedKernel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reminder not Found..
+        /// </summary>
+        public static string ReminderNotFound {
+            get {
+                return ResourceManager.GetString("ReminderNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The OTP resend request is invalid..
         /// </summary>
         public static string ResendEmailOtpInvalidRequest {
@@ -264,6 +273,15 @@ namespace SilentMoonApp.SharedKernel.Resources {
         public static string StorageUnsupportedFileType {
             get {
                 return ResourceManager.GetString("StorageUnsupportedFileType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not have permission to perform an operation on this reminder..
+        /// </summary>
+        public static string UserForbidden {
+            get {
+                return ResourceManager.GetString("UserForbidden", resourceCulture);
             }
         }
         

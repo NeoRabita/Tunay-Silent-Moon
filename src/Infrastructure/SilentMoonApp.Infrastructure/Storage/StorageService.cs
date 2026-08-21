@@ -229,23 +229,23 @@ public class StorageService : IStorageService
 
 
 	public async Task<Result<string>> GetFileUrlAsync(StorageFileReference fileReference,
-										TimeSpan? urlExperation = null,
+										TimeSpan? urlExpiration = null,
 										CancellationToken ct = default)
 	{
 		ValidateFileReference(fileReference);
 
 
-		if (urlExperation is not null)
+		if (urlExpiration is not null)
 		{
-			if (urlExperation <= TimeSpan.Zero)
-				throw new ArgumentOutOfRangeException(paramName: nameof(urlExperation),
+			if (urlExpiration <= TimeSpan.Zero)
+				throw new ArgumentOutOfRangeException(paramName: nameof(urlExpiration),
 													  message: "Url-Experation must be greater than zero.");
 
 
 			TimeSpan maximumExpiration = TimeSpan.FromMinutes(_settings.MaxUrlExpirationMinutes);
 
-			if (urlExperation > maximumExpiration)
-				throw new ArgumentOutOfRangeException(paramName: nameof(urlExperation),
+			if (urlExpiration > maximumExpiration)
+				throw new ArgumentOutOfRangeException(paramName: nameof(urlExpiration),
 													  message: $"Url-Experation must be less than or equal to the maximum allowed expiration of {maximumExpiration}.");
 		}
 
@@ -262,7 +262,7 @@ public class StorageService : IStorageService
 
 		return Result<string>.Success(
 			await storageProvider.GetFileUrlAsync(fileReference: fileReference,
-												  urlExperation: urlExperation,
+												  urlExpiration: urlExpiration,
 												  cancellationToken: ct)
 		);
 	}

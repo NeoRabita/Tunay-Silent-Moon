@@ -42,8 +42,10 @@ public class User : BaseEntity,
 	public Guid? AvatarImageFileId { get; set; }
 	public ImageFile? AvatarImageFile { get; set; }
 
+	public ICollection<Reminder> Reminders { get; set; } = new List<Reminder>();
 	public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 	public ICollection<UserTopic> UserTopics { get; set; } = new List<UserTopic>(); 
 	public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 	public ICollection<UserExternalProvider> UserExternalProviders { get; set; } = new List<UserExternalProvider>();
+
 }

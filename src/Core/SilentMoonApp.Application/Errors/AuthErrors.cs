@@ -37,4 +37,10 @@ public static class AuthErrors
 
 		=> Error.NotFound(code: "auth.invalid_refresh_token",
 						  message: ErrorMessages.AuthInvalidRefreshToken);
+
+
+	public static Error UserForbidden(string? customMessage = null)
+
+		=> Error.Forbidden(code: "user.forbidden",
+						   message: ErrorMessages.UserForbidden);
 }
