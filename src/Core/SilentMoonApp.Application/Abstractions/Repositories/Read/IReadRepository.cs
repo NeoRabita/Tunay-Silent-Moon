@@ -8,6 +8,10 @@ public interface IReadRepository<TEntity> where TEntity : class
 							  Func<IQueryable<TEntity>, IQueryable<TEntity>>? includes = null,
 							  bool tracking = false);
 
+	Task<IReadOnlyList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter = null,
+										     Func<IQueryable<TEntity>, IQueryable<TEntity>>? includes = null,
+										     bool tracking = false, CancellationToken cancellationToken = default);
+
 	Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
 							Func<IQueryable<TEntity>, IQueryable<TEntity>>? includes = null,
 							bool tracking = false,
