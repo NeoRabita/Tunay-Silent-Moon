@@ -207,4 +207,10 @@
   <data name="StorageInvalidFileName" xml:space="preserve">
     <value>The file name is invalid or exceeds the maximum allowed character count.</value>
   </data>
+  <data name="ReminderNotFound" xml:space="preserve">
+    <value>Reminder not Found.</value>
+  </data>
+  <data name="UserForbidden" xml:space="preserve">
+    <value>You do not have permission to perform an operation on this reminder.</value>
+  </data>
 </root>

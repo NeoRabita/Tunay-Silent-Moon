@@ -10,28 +10,29 @@ public sealed class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<App
 	{
 		var basePath = Directory.GetCurrentDirectory();
 
+		string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+							  ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT")
+							  ?? "Development";
+
 		IConfiguration configuration = new ConfigurationBuilder()
 			.SetBasePath(basePath)
-			.AddJsonFile(
-				path: "appsettings.json",
-				optional: false,
-				reloadOnChange: false)
-			.AddJsonFile(
-				path: "appsettings.Development.json",
-				optional: true,
-				reloadOnChange: false)
+			.AddJsonFile(path: "appsettings.json",
+						 optional: false,
+						 reloadOnChange: false)
+			.AddJsonFile(path: $"appsettings.{environmentName}.json",
+						 optional: true,
+						 reloadOnChange: false)
 			.AddEnvironmentVariables()
 			.Build();
 
-		var connectionString =
-			configuration.GetConnectionString("DefaultConnection")
-			?? throw new InvalidOperationException(
-				"Connection String 'DefaultConnection' was not Found.");
+		string connectionString = configuration.GetConnectionString("OracleConnection")
+							   //?? configuration.GetConnectionString("DefaultConnection")
+							   ?? throw new InvalidOperationException("ConnectionStrings were not found.");
 
-		var optionsBuilder =
-			new DbContextOptionsBuilder<AppDbContext>();
+		var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-		optionsBuilder.UseSqlServer(connectionString);
+		//optionsBuilder.UseSqlServer(connectionString);
+		optionsBuilder.UseOracle(connectionString);
 
 		return new AppDbContext(optionsBuilder.Options);
 	}

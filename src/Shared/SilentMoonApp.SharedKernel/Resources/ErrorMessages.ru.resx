@@ -207,4 +207,10 @@
   <data name="StorageInvalidFileName" xml:space="preserve">
     <value>Имя файла недействительно или превышает максимально допустимое количество символов.</value>
   </data>
+  <data name="ReminderNotFound" xml:space="preserve">
+    <value>Напоминание не найдено.</value>
+  </data>
+  <data name="UserForbidden" xml:space="preserve">
+    <value>У вас нет разрешения на выполнение операции с этим напоминанием.</value>
+  </data>
 </root>

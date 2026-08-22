@@ -26,18 +26,12 @@ app.UseExceptionHandler();
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-	app.UseSwagger();
-	app.UseSwaggerUI(options =>
-	{
-		options.SwaggerEndpoint(
-			"/swagger/v1/swagger.json",
-			"Project API v1");
+//if (app.Environment.IsDevelopment())
+//{
 
-		options.DisplayRequestDuration();
-	});
-}
+//}
+
+app.UseProtectedSwagger();
 
 
 app.UseHttpsRedirection();
@@ -50,5 +44,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health")
+	.AllowAnonymous();
+
 
 app.Run();
