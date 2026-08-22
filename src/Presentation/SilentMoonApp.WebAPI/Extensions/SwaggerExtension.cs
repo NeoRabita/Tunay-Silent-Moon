@@ -6,11 +6,11 @@ public static class SwaggerExtension
 {
 	public static WebApplication UseProtectedSwagger(this WebApplication app)
 	{
-		bool swaggerEnabled = app.Environment.IsDevelopment()
-							  || app.Configuration.GetValue<bool>("Swagger:Enabled");
+		//bool swaggerEnabled = app.Environment.IsDevelopment()
+		//					  || app.Configuration.GetValue<bool>("Swagger:Enabled");
 
-		if (!swaggerEnabled)
-			return app;
+		//if (!swaggerEnabled)
+		//	return app;
 
 
 		if (!app.Environment.IsDevelopment())
