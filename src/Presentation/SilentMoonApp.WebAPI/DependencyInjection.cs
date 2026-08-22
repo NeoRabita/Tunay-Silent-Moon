@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Threading.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Mvc;
 using SilentMoonApp.Application.Abstractions.Authentication;
 using SilentMoonApp.Infrastructure.Settings;
 using SilentMoonApp.WebAPI.HttpContexts;
@@ -23,6 +21,7 @@ public static class DependencyInjection
 	{
 		services.AddControllers();
 		services.AddEndpointsApiExplorer();
+		services.AddHealthChecks();
 		services.AddHttpContextAccessor();
 		services.AddLocalization();
 
@@ -49,7 +48,7 @@ public static class DependencyInjection
 	{
 		JwtSettings jwtSettings = configuration.GetRequiredSection(JwtSettings.SectionName)
 											   .Get<JwtSettings>()
-								?? throw new InvalidOperationException($"{JwtSettings.SectionName} konfiqurasiyasi tapilmadi.");
+							   ?? throw new InvalidOperationException($"{JwtSettings.SectionName} konfiqurasiyasi tapilmadi.");
 
 
 		byte[] signingKeyBytes = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);
@@ -177,7 +176,7 @@ public static class DependencyInjection
 			   "v1",
 			   new OpenApiInfo
 			   {
-				   Title = "Project API",
+				   Title = "SilentMoon API",
 				   Version = "v1"
 			   });
 

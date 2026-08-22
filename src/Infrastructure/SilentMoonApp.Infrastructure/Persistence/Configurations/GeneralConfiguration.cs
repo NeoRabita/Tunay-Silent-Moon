@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using SilentMoonApp.Domain;
+using SilentMoonApp.Domain.Entities;
 using SilentMoonApp.Domain.Entities.Files;
 using SilentMoonApp.Domain.Entities.Identity;
 
@@ -30,6 +32,24 @@ public static class GeneralConfiguration
 			   .IsRequired(false)
 			   .OnDelete(DeleteBehavior.NoAction);
 
+		builder.Entity<User>()
+			   .HasMany(user => user.UserExternalProviders)
+			   .WithOne(provider => provider.User)
+			   .HasForeignKey(provider => provider.UserId)
+			   .OnDelete(DeleteBehavior.Cascade);
+
+		builder.Entity<User>()
+			   .HasMany(user => user.UserTopics)
+			   .WithOne(userTopic => userTopic.User)
+			   .HasForeignKey(userTopic => userTopic.UserId)
+			   .OnDelete(DeleteBehavior.Cascade);
+
+		builder.Entity<User>()
+			   .HasMany(user => user.Reminders)
+			   .WithOne(reminder => reminder.User)
+			   .HasForeignKey(reminder => reminder.UserId)
+			   .OnDelete(DeleteBehavior.Cascade);
+
 
 		// Role Relations
 
@@ -40,12 +60,23 @@ public static class GeneralConfiguration
 			   .OnDelete(DeleteBehavior.Cascade);
 
 
+
 		// RefreshToken Relations
 
 		builder.Entity<RefreshToken>()
 			   .HasOne<RefreshToken>()
 			   .WithOne()
 			   .HasForeignKey<RefreshToken>(refreshToken => refreshToken.ReplacedTokenId)
+			   .OnDelete(DeleteBehavior.NoAction);
+
+
+
+		// Topic Relations
+
+		builder.Entity<Topic>()
+			   .HasMany(topic => topic.UserTopics)
+			   .WithOne(userTopic => userTopic.Topic)
+			   .HasForeignKey(userTopic => userTopic.TopicId)
 			   .OnDelete(DeleteBehavior.NoAction);
 	}
 
@@ -105,11 +136,13 @@ public static class GeneralConfiguration
 			   .IsUnique();
 
 
+
 		// RefreshToken Indexes
 
 		builder.Entity<RefreshToken>()
 			   .HasIndex(refreshToken => refreshToken.TokenHash)
 			   .IsUnique();
+
 
 
 		// ImageFile Indexes
@@ -120,6 +153,34 @@ public static class GeneralConfiguration
 				   file.StoredFileName
 			   })
 			   .IsUnique();
+
+
+
+		// Topic Indexes
+
+		builder.Entity<Topic>()
+			   .HasIndex(topic => topic.Slug)
+			   .IsUnique();
+
+
+
+		// UserTopic Indexes
+
+		builder.Entity<UserTopic>()
+			   .HasIndex(userTopic => new
+			   {
+			  	   userTopic.UserId,
+			  	   userTopic.TopicId
+			   })
+			   .IsUnique();
+
+
+
+		// Reminder Indexes
+
+		builder.Entity<Reminder>()
+	   .Property(reminder => reminder.Label)
+	   .HasMaxLength(100);
 	}
 
 
@@ -141,6 +202,12 @@ public static class GeneralConfiguration
 
 		builder.Entity<ImageFile>()
 			   .ToTable("ImageFiles");
+
+		builder.Entity<Topic>()
+			   .ToTable("Topics");
+
+		builder.Entity<UserTopic>()
+			   .ToTable("UserTopics");	
 	}
 
 }

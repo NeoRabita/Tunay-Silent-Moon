@@ -18,7 +18,7 @@ public abstract class StorageProvider
 														CancellationToken cancellationToken = default);
 
 	public abstract Task<string> GetFileUrlAsync(StorageFileReference fileReference,
-												 TimeSpan? urlExperation = null,
+												 TimeSpan? urlExpiration = null,
 												 CancellationToken cancellationToken = default);
 
 	public abstract Task DownloadAsync(StorageFileReference fileReference,

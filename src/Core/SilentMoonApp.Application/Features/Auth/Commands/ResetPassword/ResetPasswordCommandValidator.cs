@@ -17,47 +17,50 @@ public sealed class ResetPasswordCommandValidator : AbstractValidator<ResetPassw
 			.WithMessage(ErrorMessages.ValidationEmailInvalid)
 
 			.MinimumLength(12)
-			.WithMessage("E-poçt ünvani minimum 12 simvol olmalidir.")
+			.WithMessage("E-mail can be at least 12 characters long.")
 
 			.MaximumLength(254)
-			.WithMessage("E-poçt ünvani maksimum 254 simvol ola bil?r.");
+			.WithMessage("E-mail can be at most 254 characters long.");
+
 
 
 		RuleFor(x => x.OtpCode)
 			.NotEmpty()
-			.WithMessage("OTP kodu t?l?b olunur.")
+			.WithMessage("OTP is required.")
 
 			.Matches(@"^\d{6}$")
-			.WithMessage("OTP kodu 6 r?q?md?n ibar?t olmalidir.");
+			.WithMessage("OTP must be a 6-digit number.");
 
 
+		
 		RuleFor(command => command.NewPassword)
 
 			.NotEmpty()
-			.WithMessage("Parol bos ola bilm?z.")
+			.WithMessage("Password cannot be empty.")
 
 			.MinimumLength(8)
-			.WithMessage("Parol minimum 8 simvol olmalidir.")
+			.WithMessage("Password must be at least 8 characters long.")
 
 			.MaximumLength(100)
-			.WithMessage("Parol maksimum 100 simvol ola bil?r.")
+			.WithMessage("Password can be at most 100 characters long.")
 
 			.Matches("[A-Z]")
-			.WithMessage("Parolda ?n azi bir böyük h?rf olmalidir.")
+			.WithMessage("Password must contain at least one uppercase letter.")
 
 			.Matches("[a-z]")
-			.WithMessage("Parolda ?n azi bir kiçik h?rf olmalidir.")
+			.WithMessage("Password must contain at least one lowercase letter.")
 
 			.Matches("[0-9]")
-			.WithMessage("Parolda ?n azi bir r?q?m olmalidir.");
+			.WithMessage("Password must contain at least one number.");
+
 
 
 		RuleFor(command => command.ConfirmPassword)
 
 			.NotEmpty()
-			.WithMessage("Parol bos ola bilm?z.")
+			.WithMessage("Password cannot be empty.")
 
 			.Equal(command => command.NewPassword)
-			.WithMessage("Yeni parol v? t?krar parol eyni deyil.");
+			.WithMessage("New password and confirm password do not match.");
 	}
 }
