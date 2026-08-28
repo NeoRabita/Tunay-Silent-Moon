@@ -1,7 +1,7 @@
 ﻿using SilentMoonApp.Domain.Enums;
 
 
-namespace SilentMoonApp.WebAPI.Contracts.Reminders.GetMyReminder;
+namespace SilentMoonApp.WebAPI.Contracts.Reminders.GetMyReminders;
 
 public sealed class GetMyRemindersResponse
 {

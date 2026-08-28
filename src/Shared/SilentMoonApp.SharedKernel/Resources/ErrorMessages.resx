@@ -213,4 +213,10 @@
   <data name="UserForbidden" xml:space="preserve">
     <value>You do not have permission to perform an operation on this reminder.</value>
   </data>
+  <data name="CourseNotFound" xml:space="preserve">
+    <value>Course was not found.</value>
+  </data>
+  <data name="TrackNotFound" xml:space="preserve">
+    <value>Track was not found.</value>
+  </data>
 </root>
