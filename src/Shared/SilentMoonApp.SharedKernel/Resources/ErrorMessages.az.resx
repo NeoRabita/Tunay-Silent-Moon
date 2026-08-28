@@ -213,4 +213,10 @@
   <data name="UserForbidden" xml:space="preserve">
     <value>Bu xatırlatma üzərində əməliyyat aparmaq icazəniz yoxdur.</value>
   </data>
+  <data name="CourseNotFound" xml:space="preserve">
+    <value>Kurs tapılmadı.</value>
+  </data>
+  <data name="TrackNotFound" xml:space="preserve">
+    <value>Trek tapılmadı</value>
+  </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 
+
 namespace SilentMoonApp.Application.Features.Reminders.Commands.CreateReminder;
 
 public sealed class CreateReminderCommandValidator:AbstractValidator<CreateReminderCommand>
