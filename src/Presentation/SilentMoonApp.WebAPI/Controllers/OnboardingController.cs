@@ -7,7 +7,6 @@ using SilentMoonApp.SharedKernel.Primitives;
 using SilentMoonApp.WebAPI.Contracts.Topics.GetTopics;
 using SilentMoonApp.WebAPI.Contracts.Topics.GetMyTopics;
 using SilentMoonApp.WebAPI.Contracts.Topics.UpdateMyTopics;
-using SilentMoonApp.WebAPI.Contracts.Reminders.GetMyReminder;
 using SilentMoonApp.WebAPI.Contracts.Reminders.CreateReminder;
 using SilentMoonApp.WebAPI.Contracts.Reminders.DeleteReminder;
 using SilentMoonApp.WebAPI.Contracts.Reminders.UpdateReminder;
@@ -16,6 +15,7 @@ using SilentMoonApp.Application.Features.Topics.Queries.GetMyTopics;
 using SilentMoonApp.Application.Features.Topics.Commands.UpdateMyTopics;
 using SilentMoonApp.Application.Features.Reminders.Queries.GetMyReminders;
 using SilentMoonApp.Application.Features.Reminders.Commands.UpdateReminder;
+using SilentMoonApp.WebAPI.Contracts.Reminders.GetMyReminders;
 
 
 namespace SilentMoonApp.WebAPI.Controllers;
@@ -137,8 +137,8 @@ public class OnboardingController : BaseController
 	[Authorize]
 	[HttpGet("me/reminders")]
 
-	[ProducesResponseType(typeof(GetMyReminderResponse), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(GetMyReminderResponse), StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(typeof(GetMyRemindersResponse), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(GetMyRemindersResponse), StatusCodes.Status401Unauthorized)]
 
 	public async Task<IActionResult> GetMyReminders(CancellationToken cancellationToken)
 	{

@@ -22,6 +22,268 @@ namespace SilentMoonApp.Infrastructure.Migrations
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<Guid>("CategoryTypeId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<Guid?>("IconFileId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("BOOLEAN");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IconFileId")
+                        .IsUnique()
+                        .HasFilter("\"IconFileId\" IS NOT NULL");
+
+                    b.HasIndex("CategoryTypeId", "Slug")
+                        .IsUnique();
+
+                    b.ToTable("Categories", (string)null);
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.CategoryType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("BOOLEAN");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.ToTable("CategoryTypes", (string)null);
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Course", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<Guid>("CoverImageFileId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("NVARCHAR2(1000)");
+
+                    b.Property<int>("DurationSec")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("BOOLEAN");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("BOOLEAN");
+
+                    b.Property<string>("SubTitle")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR2(256)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CoverImageFileId")
+                        .IsUnique();
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("IsFeatured");
+
+                    b.ToTable("Courses", (string)null);
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.CourseFavorite", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("RAW(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("UserId", "CourseId")
+                        .IsUnique();
+
+                    b.ToTable("CourseFavorites", (string)null);
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Files.AudioFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<string>("ContainerName")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<int>("DurationSec")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("NVARCHAR2(16)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("BOOLEAN");
+
+                    b.Property<long>("SizeBytes")
+                        .HasColumnType("NUMBER(19)");
+
+                    b.Property<int>("StorageProvider")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("StoredFileName")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("NVARCHAR2(1024)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<string>("UploadedFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("NVARCHAR2(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContainerName", "StoredFileName")
+                        .IsUnique();
+
+                    b.ToTable("AudioFiles", (string)null);
+                });
+
             modelBuilder.Entity("SilentMoonApp.Domain.Entities.Files.ImageFile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -30,11 +292,13 @@ namespace SilentMoonApp.Infrastructure.Migrations
 
                     b.Property<string>("ContainerName")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<string>("ContentType")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
@@ -50,7 +314,8 @@ namespace SilentMoonApp.Infrastructure.Migrations
 
                     b.Property<string>("Extension")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(16)
+                        .HasColumnType("NVARCHAR2(16)");
 
                     b.Property<int?>("Height")
                         .HasColumnType("NUMBER(10)");
@@ -66,7 +331,8 @@ namespace SilentMoonApp.Infrastructure.Migrations
 
                     b.Property<string>("StoredFileName")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("NVARCHAR2(1024)");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
@@ -76,14 +342,15 @@ namespace SilentMoonApp.Infrastructure.Migrations
 
                     b.Property<string>("UploadedFileName")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(255)
+                        .HasColumnType("NVARCHAR2(255)");
 
                     b.Property<int?>("Width")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StoredFileName")
+                    b.HasIndex("ContainerName", "StoredFileName")
                         .IsUnique();
 
                     b.ToTable("ImageFiles", (string)null);
@@ -305,6 +572,51 @@ namespace SilentMoonApp.Infrastructure.Migrations
                     b.ToTable("UserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Narrator", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("BOOLEAN");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.ToTable("Narrators", (string)null);
+                });
+
             modelBuilder.Entity("SilentMoonApp.Domain.Entities.Topic", b =>
                 {
                     b.Property<Guid>("Id")
@@ -354,6 +666,103 @@ namespace SilentMoonApp.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Topics", (string)null);
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Track", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<Guid>("AudioFileId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<Guid?>("CoverImageFileId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("BOOLEAN");
+
+                    b.Property<Guid>("NarratorId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("NVARCHAR2(128)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("RAW(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AudioFileId")
+                        .IsUnique();
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("CoverImageFileId")
+                        .IsUnique()
+                        .HasFilter("\"CoverImageFileId\" IS NOT NULL");
+
+                    b.HasIndex("NarratorId");
+
+                    b.HasIndex("CourseId", "Order")
+                        .IsUnique();
+
+                    b.ToTable("Tracks", (string)null);
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.TrackProgress", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<bool>("Completed")
+                        .HasColumnType("BOOLEAN");
+
+                    b.Property<int>("PositionSec")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<Guid>("TrackId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("RAW(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrackId");
+
+                    b.HasIndex("UserId", "TrackId")
+                        .IsUnique();
+
+                    b.ToTable("TrackProgresses", (string)null);
                 });
 
             modelBuilder.Entity("SilentMoonApp.Domain.Entities.UserTopic", b =>
@@ -420,6 +829,62 @@ namespace SilentMoonApp.Infrastructure.Migrations
                     b.ToTable("Reminders");
                 });
 
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Category", b =>
+                {
+                    b.HasOne("SilentMoonApp.Domain.Entities.CategoryType", "CategoryType")
+                        .WithMany("Categories")
+                        .HasForeignKey("CategoryTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SilentMoonApp.Domain.Entities.Files.ImageFile", "IconFile")
+                        .WithOne()
+                        .HasForeignKey("SilentMoonApp.Domain.Entities.Category", "IconFileId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("CategoryType");
+
+                    b.Navigation("IconFile");
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Course", b =>
+                {
+                    b.HasOne("SilentMoonApp.Domain.Entities.Category", "Category")
+                        .WithMany("Courses")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SilentMoonApp.Domain.Entities.Files.ImageFile", "CoverImageFile")
+                        .WithOne()
+                        .HasForeignKey("SilentMoonApp.Domain.Entities.Course", "CoverImageFileId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("CoverImageFile");
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.CourseFavorite", b =>
+                {
+                    b.HasOne("SilentMoonApp.Domain.Entities.Course", "Course")
+                        .WithMany("CourseFavorites")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SilentMoonApp.Domain.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SilentMoonApp.Domain.Entities.Identity.RefreshToken", b =>
                 {
                     b.HasOne("SilentMoonApp.Domain.Entities.Identity.RefreshToken", null)
@@ -476,6 +941,58 @@ namespace SilentMoonApp.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Track", b =>
+                {
+                    b.HasOne("SilentMoonApp.Domain.Entities.Files.AudioFile", "AudioFile")
+                        .WithOne()
+                        .HasForeignKey("SilentMoonApp.Domain.Entities.Track", "AudioFileId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("SilentMoonApp.Domain.Entities.Course", "Course")
+                        .WithMany("Tracks")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SilentMoonApp.Domain.Entities.Files.ImageFile", "CoverImageFile")
+                        .WithOne()
+                        .HasForeignKey("SilentMoonApp.Domain.Entities.Track", "CoverImageFileId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("SilentMoonApp.Domain.Entities.Narrator", "Narrator")
+                        .WithMany("Tracks")
+                        .HasForeignKey("NarratorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("AudioFile");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("CoverImageFile");
+
+                    b.Navigation("Narrator");
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.TrackProgress", b =>
+                {
+                    b.HasOne("SilentMoonApp.Domain.Entities.Track", "Track")
+                        .WithMany("TrackProgresses")
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SilentMoonApp.Domain.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Track");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SilentMoonApp.Domain.Entities.UserTopic", b =>
                 {
                     b.HasOne("SilentMoonApp.Domain.Entities.Topic", "Topic")
@@ -506,6 +1023,23 @@ namespace SilentMoonApp.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.CategoryType", b =>
+                {
+                    b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Course", b =>
+                {
+                    b.Navigation("CourseFavorites");
+
+                    b.Navigation("Tracks");
+                });
+
             modelBuilder.Entity("SilentMoonApp.Domain.Entities.Identity.Role", b =>
                 {
                     b.Navigation("UserRoles");
@@ -524,9 +1058,19 @@ namespace SilentMoonApp.Infrastructure.Migrations
                     b.Navigation("UserTopics");
                 });
 
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Narrator", b =>
+                {
+                    b.Navigation("Tracks");
+                });
+
             modelBuilder.Entity("SilentMoonApp.Domain.Entities.Topic", b =>
                 {
                     b.Navigation("UserTopics");
+                });
+
+            modelBuilder.Entity("SilentMoonApp.Domain.Entities.Track", b =>
+                {
+                    b.Navigation("TrackProgresses");
                 });
 #pragma warning restore 612, 618
         }
