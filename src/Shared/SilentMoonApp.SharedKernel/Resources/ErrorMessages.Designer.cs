@@ -106,6 +106,15 @@ namespace SilentMoonApp.SharedKernel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Course was not found..
+        /// </summary>
+        public static string CourseNotFound {
+            get {
+                return ResourceManager.GetString("CourseNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The email address is already in use..
         /// </summary>
         public static string EmailAlreadyExists {
@@ -273,6 +282,15 @@ namespace SilentMoonApp.SharedKernel.Resources {
         public static string StorageUnsupportedFileType {
             get {
                 return ResourceManager.GetString("StorageUnsupportedFileType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Track was not found..
+        /// </summary>
+        public static string TrackNotFound {
+            get {
+                return ResourceManager.GetString("TrackNotFound", resourceCulture);
             }
         }
         

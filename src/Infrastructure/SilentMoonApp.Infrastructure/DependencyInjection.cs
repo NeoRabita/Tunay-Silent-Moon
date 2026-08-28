@@ -3,17 +3,19 @@ using System.Text;
 using System.Net.Mail;
 using StackExchange.Redis;
 using SilentMoonApp.Domain.Enums;
-using SilentMoonApp.Application.Settings;
 using Microsoft.EntityFrameworkCore;
+using SilentMoonApp.Application.Settings;
 using Microsoft.Extensions.Configuration;
 using SilentMoonApp.Infrastructure.Hashing;
 using SilentMoonApp.Infrastructure.Caching;
 using SilentMoonApp.Infrastructure.Logging;
 using SilentMoonApp.Infrastructure.Settings;
+using SilentMoonApp.Infrastructure.Executors;
 using SilentMoonApp.Application.Abstractions.Logging;
 using SilentMoonApp.Infrastructure.Storage.Providers;
 using SilentMoonApp.Application.Abstractions.Caching;
 using SilentMoonApp.Application.Abstractions.Hashing;
+using SilentMoonApp.Application.Abstractions.Executors;
 using SilentMoonApp.Infrastructure.Communication.Email;
 using SilentMoonApp.Infrastructure.Persistence.Contexts;
 using SilentMoonApp.Application.Abstractions.Repositories;
@@ -338,6 +340,8 @@ public static class DependencyInjection
 
 		services.AddSingleton<IExternalAuthProvider, GoogleAuthProvider>();
 		services.AddSingleton<IExternalAuthProvider, FacebookAuthProvider>();
+
+		services.AddScoped<IQueryExecutor, EfQueryExecutor>();
 	}
 
 
