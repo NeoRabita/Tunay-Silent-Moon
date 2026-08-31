@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using SilentMoonApp.Infrastructure.Persistence.Contexts;
@@ -11,9 +12,11 @@ using SilentMoonApp.Infrastructure.Persistence.Contexts;
 namespace SilentMoonApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260831021006_IsRecommended_IsDailythought_IsPopular_Properities_was_added_into_Courses_Table")]
+    partial class IsRecommended_IsDailythought_IsPopular_Properities_was_added_into_Courses_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
