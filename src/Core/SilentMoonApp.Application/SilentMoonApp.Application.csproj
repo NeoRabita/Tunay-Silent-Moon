@@ -23,6 +23,7 @@
     <Folder Include="Features\Categories\Commads\" />
     <Folder Include="Features\Courses\Commands\" />
     <Folder Include="Features\Health\Commands\" />
+    <Folder Include="Features\Home\Commands\" />
   </ItemGroup>
 
 </Project>
