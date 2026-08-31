@@ -370,6 +370,15 @@ public static class GeneralConfiguration
 			   .HasIndex(course => course.CreatedAt);
 
 		builder.Entity<Course>()
+		   	   .HasIndex(course => course.IsRecommended);
+
+		builder.Entity<Course>()
+			   .HasIndex(course => course.IsDailyThought);
+
+		builder.Entity<Course>()
+			   .HasIndex(course => course.IsPopular);
+
+		builder.Entity<Course>()
 			   .HasIndex(course => course.IsFeatured);
 
 
