@@ -12,7 +12,11 @@ public class Course : BaseEntity,
 	public string Description { get; set; } = string.Empty;
 
 	public int DurationSec { get; set; }
+	
+	public bool IsRecommended { get; set; }
+	public bool IsDailyThought { get; set; }
 	public bool IsFeatured { get; set; }
+	public bool IsPopular { get; set; }
 
 
 	// Auditable Properties
