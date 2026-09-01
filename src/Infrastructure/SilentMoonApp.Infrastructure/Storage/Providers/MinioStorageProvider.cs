@@ -1,7 +1,7 @@
 using Minio;
 using Minio.Exceptions;
-using SilentMoonApp.Domain.Enums;
 using Minio.DataModel.Args;
+using SilentMoonApp.Domain.Enums;
 using Microsoft.Extensions.Logging;
 using SilentMoonApp.Application.DTOs.Storage;
 using SilentMoonApp.Application.Exceptions.Storage;
@@ -11,11 +11,11 @@ namespace SilentMoonApp.Infrastructure.Storage.Providers;
 
 public class MinioStorageProvider : StorageProvider
 {
+	private static readonly HttpClient _httpClient = new();
 	private const int StreamBufferSize = 81920; // 80 KB
 
 	private readonly IMinioClient _minioClient;
 	private readonly ILogger<MinioStorageProvider> _logger;
-
 
 	public MinioStorageProvider(IMinioClient minioClient,
 								ILogger<MinioStorageProvider> logger)
@@ -23,6 +23,7 @@ public class MinioStorageProvider : StorageProvider
 		_minioClient = minioClient;
 		_logger = logger;
 	}
+
 
 
 
@@ -58,7 +59,10 @@ public class MinioStorageProvider : StorageProvider
 		}
 	}
 
-	public override async Task DeleteAsync(StorageFileReference fileReference, CancellationToken cancellationToken = default)
+
+
+	public override async Task DeleteAsync(StorageFileReference fileReference,
+										   CancellationToken ct = default)
 	{
 		try
 		{
@@ -66,7 +70,7 @@ public class MinioStorageProvider : StorageProvider
 											 .WithObject(fileReference.StoredFileName);
 
 			await _minioClient.RemoveObjectAsync(args: args,
-												 cancellationToken: cancellationToken);
+												 cancellationToken: ct);
 		}
 
 		catch (ObjectNotFoundException)
@@ -84,6 +88,7 @@ public class MinioStorageProvider : StorageProvider
 												innerException: exception);
 		}
 	}
+
 
 
 	public override async Task<StorageFileInfo?> GetInfoAsync(StorageFileReference fileReference,
@@ -125,6 +130,7 @@ public class MinioStorageProvider : StorageProvider
 	}
 
 
+
 	public override async Task<string> GetFileUrlAsync(StorageFileReference fileReference,
 												TimeSpan? urlExpiration = null,
 												CancellationToken ct = default)
@@ -155,8 +161,10 @@ public class MinioStorageProvider : StorageProvider
 	}
 
 
+
 	public override async Task DownloadAsync(StorageFileReference fileReference,
-									   Stream destinationStream, CancellationToken cancellationToken = default)
+											 Stream destinationStream,
+											 CancellationToken ct = default)
 	{
 		try
 		{
@@ -171,7 +179,7 @@ public class MinioStorageProvider : StorageProvider
 																	});
 
 			await _minioClient.GetObjectAsync(args: args,
-											  cancellationToken: cancellationToken);
+											  cancellationToken: ct);
 		}
 
 		catch (ObjectNotFoundException)
@@ -190,6 +198,68 @@ public class MinioStorageProvider : StorageProvider
 												innerException: exception);
 		}
 
+	}
+
+
+
+	public override async Task<StorageStreamResult> OpenReadStreamAsync(StorageFileReference fileReference,
+																		string? rangeHeader = null,
+																		TimeSpan? urlExpiration = null,
+																		CancellationToken ct = default)
+	{
+		try
+		{
+			string url = await GetFileUrlAsync(fileReference: fileReference,
+											   urlExpiration: urlExpiration,
+											   ct: ct);
+
+			using HttpRequestMessage requestMessage = new(method: HttpMethod.Get,
+														  requestUri: url);
+
+			if (!string.IsNullOrWhiteSpace(rangeHeader))
+				requestMessage.Headers.Add(name: "Range",
+											value: rangeHeader);
+
+
+			HttpResponseMessage responseMessage = await _httpClient.SendAsync(request: requestMessage,
+																			  completionOption: HttpCompletionOption.ResponseHeadersRead,
+																			  cancellationToken: ct);
+
+			if (!responseMessage.IsSuccessStatusCode)
+			{
+				responseMessage.Dispose();
+				throw new StorageOperationException(message: $"Failed to open read stream. HTTP Status Code: {responseMessage.StatusCode}");
+			}
+
+
+			Stream audioStream = await responseMessage.Content.ReadAsStreamAsync(ct);
+
+			string contentType = responseMessage.Content.Headers.ContentType?.ToString()
+							  ?? "application/octet-stream";
+
+			return new StorageStreamResult(stream: audioStream,
+										   contentType: contentType,
+										   contentLength: responseMessage.Content.Headers.ContentLength,
+										   contentRange: responseMessage.Content.Headers.ContentRange?.ToString(),
+										   acceptRanges: responseMessage.Content.Headers.Any(),
+										   statusCode: (int)responseMessage.StatusCode,
+										   lease: responseMessage);
+		}
+
+		catch (ObjectNotFoundException)
+		{
+			throw new StorageNotFoundException(containerName: fileReference.ContainerName,
+											   storedFileName: fileReference.StoredFileName);
+		}
+
+		catch (MinioException exception)
+		{
+			_logger.LogError(exception, "MinIO open read stream failed. Bucket: {Bucket}, Object: {Object}",
+							 fileReference.ContainerName,
+							 fileReference.StoredFileName);
+			throw new StorageOperationException(message: "MinIO open read stream operation failed.",
+												innerException: exception);
+		}
 	}
 
 

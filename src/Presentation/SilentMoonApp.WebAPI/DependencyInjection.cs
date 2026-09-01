@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Text;
 using SilentMoonApp.WebAPI.Filters;
 
+
 namespace SilentMoonApp.WebAPI;
 
 public static class DependencyInjection
@@ -28,6 +29,7 @@ public static class DependencyInjection
 		services.AddExceptionHandler<GlobalExceptionHandler>();
 		services.AddProblemDetails();
 
+		services.AddHttpClient();
 
 		AddServices(services);
 		AddRateLimiters(services);
