@@ -137,8 +137,8 @@ public class OnboardingController : BaseController
 	[Authorize]
 	[HttpGet("me/reminders")]
 
-	[ProducesResponseType(typeof(GetMyReminderResponse), StatusCodes.Status200OK)]
-	[ProducesResponseType(typeof(GetMyReminderResponse), StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(typeof(GetMyRemindersResponse), StatusCodes.Status200OK)]
+	[ProducesResponseType(typeof(GetMyRemindersResponse), StatusCodes.Status401Unauthorized)]
 
 	public async Task<IActionResult> GetMyReminders(CancellationToken cancellationToken)
 	{

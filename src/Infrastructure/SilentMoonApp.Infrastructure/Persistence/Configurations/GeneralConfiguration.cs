@@ -205,7 +205,7 @@ public static class GeneralConfiguration
 
 		builder.Entity<UserExternalProvider>()
 				.Property(provider => provider.ProviderUserId)
-				.HasMaxLength(256); // NEW: nvarchar(max) index üçün problem yaradir
+				.HasMaxLength(256); // NEW: nvarchar(max) index ï¿½ï¿½ï¿½n problem yaradir
 
 		builder.Entity<UserExternalProvider>()
 				.HasIndex(provider => new

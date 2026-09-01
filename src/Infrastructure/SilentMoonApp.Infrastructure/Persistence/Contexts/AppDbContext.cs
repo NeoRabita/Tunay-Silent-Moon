@@ -29,6 +29,7 @@ public sealed class AppDbContext : DbContext
 	public DbSet<UserExternalProvider> UserExternalProviders => Set<UserExternalProvider>();
 
 
+
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		base.OnModelCreating(modelBuilder);
