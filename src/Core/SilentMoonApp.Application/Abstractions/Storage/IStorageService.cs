@@ -1,5 +1,5 @@
 using SilentMoonApp.Application.DTOs.Storage;
-using SilentMoonApp.SharedKernel.Primitives;
+
 
 namespace SilentMoonApp.Application.Abstractions.Storage;
 
@@ -25,4 +25,9 @@ public interface IStorageService
 	Task<Result> DownloadFileAsync(StorageFileReference fileReference,
 						   Stream destinationStream,
 						   CancellationToken cancellationToken = default);
+
+	Task<Result<StorageStreamResult>> OpenReadStreamAsync(StorageFileReference fileReference,
+														  string? rangeHeader = null,
+														  TimeSpan? urlExpiration = null,
+														  CancellationToken cancellationToken = default);
 }

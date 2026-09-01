@@ -100,7 +100,7 @@ public class GetHomeQueryHandler : IQueryHandler<GetHomeQuery, GetHomeResult>
 
 		Course? dailyThoughtCourse = (await _queryExecutor.ToListAsync(query: dailyThoughtCourseQuery,
 																	  cancellationToken: ct))
-														 .FirstOrDefault();
+														  .FirstOrDefault();
 
 		IReadOnlyList<Course> featuredCourses = await _queryExecutor.ToListAsync(query: featuredCoursesQuery,
 																				 cancellationToken: ct);
