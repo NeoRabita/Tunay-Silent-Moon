@@ -219,4 +219,10 @@
   <data name="TrackNotFound" xml:space="preserve">
     <value>Track was not found.</value>
   </data>
+  <data name="TrackProgressNotFound" xml:space="preserve">
+    <value>TrackProgress was not found.</value>
+  </data>
+  <data name="TrackProgressInvalidPosition" xml:space="preserve">
+    <value>The playback position cannot be greater than the track duration.</value>
+  </data>
 </root>
