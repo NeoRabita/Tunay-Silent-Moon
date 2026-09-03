@@ -1,13 +1,13 @@
 using SilentMoonApp.Domain.Enums;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
+using SilentMoonApp.Application.Errors;
 using SilentMoonApp.Infrastructure.Settings;
+using SilentMoonApp.SharedKernel.Primitives;
 using SilentMoonApp.Application.DTOs.Storage;
 using SilentMoonApp.Application.Exceptions.Storage;
 using SilentMoonApp.Application.Abstractions.Storage;
 using SilentMoonApp.Infrastructure.Storage.Providers;
-using SilentMoonApp.SharedKernel.Primitives;
-using SilentMoonApp.Application.Errors;
 
 
 namespace SilentMoonApp.Infrastructure.Storage;
@@ -46,6 +46,7 @@ public class StorageService : IStorageService
 	private readonly StorageSettings _settings;
 	private readonly TimeProvider _timeProvider;
 	private readonly ILogger<StorageService> _logger;
+
 
 
 	public StorageService(IEnumerable<StorageProvider> providers,
@@ -133,6 +134,7 @@ public class StorageService : IStorageService
 	}
 
 
+
 	public async Task<Result<StorageUploadResult>> ReplaceFileAsync(StorageUploadRequest newFile,
 																	StorageFileReference existingFile,
 																	CancellationToken ct = default)
@@ -185,6 +187,7 @@ public class StorageService : IStorageService
 	}
 
 
+
 	public async Task DeleteFileAsync(StorageFileReference fileReference,
 									  CancellationToken ct = default)
 	{
@@ -205,6 +208,7 @@ public class StorageService : IStorageService
 	}
 
 
+
 	public Task<StorageFileInfo?> GetFileInfoAsync(StorageFileReference fileReference,
 												   CancellationToken ct = default)
 	{
@@ -218,6 +222,7 @@ public class StorageService : IStorageService
 	}
 
 
+
 	public async Task<bool> FileExistsAsync(StorageFileReference fileReference,
 											CancellationToken ct = default)
 	{
@@ -226,6 +231,7 @@ public class StorageService : IStorageService
 
 		return fileInfo is not null;
 	}
+
 
 
 	public async Task<Result<string>> GetFileUrlAsync(StorageFileReference fileReference,
@@ -299,6 +305,35 @@ public class StorageService : IStorageService
 				StorageErrors.FileNotFound());
 		}
 	}
+
+
+
+	public async Task<Result<StorageStreamResult>> OpenReadStreamAsync(StorageFileReference fileReference,
+																	 string? rangeHeader = null,
+																	 TimeSpan? urlExpiration = null,
+																	 CancellationToken ct = default)
+	{
+		try
+		{
+			ValidateFileReference(fileReference);
+
+			StorageProvider storageProvider = GetProvider(fileReference.StorageProvider);
+
+			StorageStreamResult streamResult = await storageProvider.OpenReadStreamAsync(fileReference: fileReference,
+																						 rangeHeader: rangeHeader,
+																						 urlExpiration: urlExpiration,
+																						 cancellationToken: ct);
+
+			return Result<StorageStreamResult>.Success(streamResult);
+		}
+
+		catch (StorageNotFoundException)
+		{
+			return Result<StorageStreamResult>.Failure(
+				StorageErrors.FileNotFound());
+		}
+	}
+
 
 
 
@@ -417,6 +452,7 @@ public class StorageService : IStorageService
 	}
 
 
+
 	private static void ValidateFileReference(StorageFileReference fileReference)
 	{
 		ArgumentNullException.ThrowIfNull(fileReference);
@@ -445,6 +481,7 @@ public class StorageService : IStorageService
 	}
 
 
+
 	private static async Task<string?> DetectContentTypeAsync(Stream fileStream,
 															CancellationToken ct)
 	{
@@ -459,6 +496,7 @@ public class StorageService : IStorageService
 
 		return DetectContentTypeBase(header, read);
 	}
+
 
 
 	private static string? DetectContentTypeBase(byte[] header,
@@ -518,6 +556,7 @@ public class StorageService : IStorageService
 
 		return null;
 	}
+
 
 
 	private string GenerateObjectName(string directory,

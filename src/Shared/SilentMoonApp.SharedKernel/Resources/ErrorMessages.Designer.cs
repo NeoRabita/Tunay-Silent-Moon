@@ -295,6 +295,24 @@ namespace SilentMoonApp.SharedKernel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The playback position cannot be greater than the track duration..
+        /// </summary>
+        public static string TrackProgressInvalidPosition {
+            get {
+                return ResourceManager.GetString("TrackProgressInvalidPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TrackProgress was not found..
+        /// </summary>
+        public static string TrackProgressNotFound {
+            get {
+                return ResourceManager.GetString("TrackProgressNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You do not have permission to perform an operation on this reminder..
         /// </summary>
         public static string UserForbidden {
