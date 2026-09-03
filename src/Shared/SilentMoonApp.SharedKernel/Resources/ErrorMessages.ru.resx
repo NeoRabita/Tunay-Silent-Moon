@@ -219,4 +219,10 @@
   <data name="TrackNotFound" xml:space="preserve">
     <value>Трек не найден.</value>
   </data>
+  <data name="TrackProgressNotFound" xml:space="preserve">
+    <value>Отслеживание прогресса не найдено.</value>
+  </data>
+  <data name="TrackProgressInvalidPosition" xml:space="preserve">
+    <value>Позиция воспроизведения не может быть больше длительности трека.</value>
+  </data>
 </root>
