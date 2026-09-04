@@ -225,4 +225,10 @@
   <data name="TrackProgressInvalidPosition" xml:space="preserve">
     <value>Oxutma mövqeyi trek müddətindən böyük ola bilməz.</value>
   </data>
+  <data name="CourseFavoriteAlreadyExists" xml:space="preserve">
+    <value>Bu Kurs artıq favoritdədir.</value>
+  </data>
+  <data name="CourseFavoriteNotFound" xml:space="preserve">
+    <value>Favorit Kurs tapılmadı.</value>
+  </data>
 </root>

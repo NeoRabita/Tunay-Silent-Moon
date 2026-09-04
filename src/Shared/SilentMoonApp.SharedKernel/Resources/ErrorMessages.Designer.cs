@@ -106,6 +106,24 @@ namespace SilentMoonApp.SharedKernel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Course is already in favorites..
+        /// </summary>
+        public static string CourseFavoriteAlreadyExists {
+            get {
+                return ResourceManager.GetString("CourseFavoriteAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Course Favorite was not found..
+        /// </summary>
+        public static string CourseFavoriteNotFound {
+            get {
+                return ResourceManager.GetString("CourseFavoriteNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Course was not found..
         /// </summary>
         public static string CourseNotFound {
