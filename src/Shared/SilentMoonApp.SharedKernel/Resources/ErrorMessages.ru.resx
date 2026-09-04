@@ -225,4 +225,10 @@
   <data name="TrackProgressInvalidPosition" xml:space="preserve">
     <value>Позиция воспроизведения не может быть больше длительности трека.</value>
   </data>
+  <data name="CourseFavoriteAlreadyExists" xml:space="preserve">
+    <value>Этот Курс уже добавлен в избранное.</value>
+  </data>
+  <data name="CourseFavoriteNotFound" xml:space="preserve">
+    <value>Избранное Kypc не найдено.</value>
+  </data>
 </root>

@@ -225,4 +225,10 @@
   <data name="TrackProgressInvalidPosition" xml:space="preserve">
     <value>The playback position cannot be greater than the track duration.</value>
   </data>
+  <data name="CourseFavoriteAlreadyExists" xml:space="preserve">
+    <value>The Course is already in favorites.</value>
+  </data>
+  <data name="CourseFavoriteNotFound" xml:space="preserve">
+    <value>Course Favorite was not found.</value>
+  </data>
 </root>
