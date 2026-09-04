@@ -1,4 +1,6 @@
-﻿namespace SilentMoonApp.WebAPI.Contracts.Categories.GetCategories;
+﻿using SilentMoonApp.Domain.Entities;
+
+namespace SilentMoonApp.WebAPI.Contracts.Categories.GetCategories;
 
 public class GetCategoriesResponse
 {
@@ -11,6 +13,8 @@ public class GetCategoryResponse
 	public required Guid Id { get; init; }
 	public required string Title { get; init; }
 	public required string Slug { get; init; }
-	public required string Type { get; init; }
 	public string IconUrl { get; init; } = string.Empty;
+	public required Guid CategoryTypeId { get; init; }
+	public required string CategoryType { get; init; }
+	public required string CategoryTypeSlug { get; init; }
 }

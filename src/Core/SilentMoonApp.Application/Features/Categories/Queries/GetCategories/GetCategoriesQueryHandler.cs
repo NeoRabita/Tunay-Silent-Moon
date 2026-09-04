@@ -66,8 +66,10 @@ public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, IRead
 			Id: category.Id,
 			Title: category.Title,
 			Slug: category.Slug,
-			Type: category.CategoryType.Slug,
-			IconUrl: categoryIconUrls.GetValueOrDefault(category.Id, string.Empty))
+			IconUrl: categoryIconUrls.GetValueOrDefault(category.Id, string.Empty),
+			CategoryTypeId: category.CategoryType.Id,
+			CategoryType: category.CategoryType.Title,
+			CategoryTypeSlug: category.CategoryType.Slug)
 		).ToList();
 
 

@@ -60,8 +60,10 @@ public class CatalogController : BaseController
 						Id = category.Id,
 						Title = category.Title,
 						Slug = category.Slug,
-						Type = category.Type,
-						IconUrl = category.IconUrl ?? string.Empty
+						IconUrl = category.IconUrl ?? string.Empty,
+						CategoryType = category.CategoryType,
+						CategoryTypeId = category.CategoryTypeId,
+						CategoryTypeSlug = category.CategoryTypeSlug
 					}).ToList()
 				}
 			)
@@ -115,7 +117,7 @@ public class CatalogController : BaseController
 						DurationSec = course.DurationSec,
 						IsFeatured = course.IsFeatured,
 						Narrators = course.Narrators
-					}).ToList(), 
+					}).ToList(),
 
 					Meta = new PaginationResponseMeta
 					{
@@ -355,7 +357,7 @@ public class CatalogController : BaseController
 	[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
 
 	public async Task<IActionResult> GetTrack([FromRoute] Guid id,
-													      CancellationToken cancellationToken)
+														  CancellationToken cancellationToken)
 	{
 		GetCourseTrackByIdQuery query = new(Id: id);
 

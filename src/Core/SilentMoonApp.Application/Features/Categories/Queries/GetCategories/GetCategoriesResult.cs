@@ -5,6 +5,8 @@ public sealed record GetCategoriesResult
 	Guid Id,
 	string Title,
 	string Slug,
-	string Type,
-	string? IconUrl
+	string? IconUrl,
+	Guid CategoryTypeId,
+	string CategoryType,
+	string CategoryTypeSlug
 );
